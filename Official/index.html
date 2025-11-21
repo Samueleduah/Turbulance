@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesaurus Media- Home</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #fc9a4a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+         .logo-img img{
+            width: 150px;
+            height: 130px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+            padding: 0;
+            margin-right: 0;
+        }
+
+        .logo-img:hover {
+            transform: rotate(12deg);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        .slideshow-container {
+            position: relative;
+            height: 600px;
+            margin-bottom: 4rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            animation: slideZoom 7s ease-in-out;
+        }
+
+        @keyframes slideZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            z-index: 1;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-category {
+            display: inline-block;
+            background: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .slide-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .slide-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-date {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .slide-nav {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .slide-nav button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .slide-nav button:hover {
+            background: rgba(255, 107, 107, 0.8);
+            transform: scale(1.1);
+        }
+
+        .slide-indicators {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #ff6b6b;
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            border-radius: 2px;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.3));
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .news-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .share-facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .share-twitter {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .share-linkedin {
+            background: #0077b5;
+            color: white;
+        }
+
+        .share-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .share-btn:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .news-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .news-card:nth-child(1) { animation-delay: 0.1s; }
+        .news-card:nth-child(2) { animation-delay: 0.2s; }
+        .news-card:nth-child(3) { animation-delay: 0.3s; }
+        .news-card:nth-child(4) { animation-delay: 0.4s; }
+        .news-card:nth-child(5) { animation-delay: 0.5s; }
+        .news-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 30, 0.98);
+            padding: 2.5rem;
+            border-radius: 25px;
+            max-width: 700px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 107, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        .preview-canvas-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        #previewCanvas {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-share-social {
+            background: rgba(29, 161, 242, 0.9);
+            color: white;
+        }
+
+        .btn-share-social:hover {
+            background: rgba(29, 161, 242, 1);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(29, 161, 242, 0.4);
+        }
+
+        #hiddenCanvas {
+            display: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-3deg); }
+            75% { transform: translateY(-5px) rotate(3deg); }
+        }
+
+        @media (max-width: 768px) {
+            .slideshow-container {
+                height: 400px;
+            }
+
+            .slide-title {
+                font-size: 1.8rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+       <div class="header-content">
+            <div class="logo-img">
+                <img src="TM logo.png ">
+            </div>
+            
+            <div class="logo">
+                <div class="logo">Thesaurus Media</div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html"class="active">Home</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="quotes.html">Quotes</a></li>
+                    <li><a href="about.html">About & contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="slideshow-container" id="slideshow"></div>
+
+        <h2 class="section-title">Latest News</h2>
+        <div class="news-grid" id="newsGrid"></div>
+    </main>
+
+    <!-- Modal for image preview -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📸 Your Shareable News Image</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="preview-canvas-container">
+                <canvas id="previewCanvas"></canvas>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn btn-download" onclick="downloadImage()">
+                    ⬇️ Download Image
+                </button>
+                <button class="modal-btn btn-share-social" onclick="shareToSocial()">
+                    🚀 Share to Social Media
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="hiddenCanvas"></canvas>
+
+    <div class="toast" id="toast">
+        <span id="toastMessage">Shared successfully!</span>
+    </div>
+
+    <script>
+        // Slideshow data 
+        const slideshowData = [
+            {
+                image: 'football.jpg',
+                category: 'Sports',
+                title: 'Ghana Black Stars Lose to South Korea',
+                description: 'the Black Stars, suffered a 1-0 defeat to South Korea in a friendly match at the Seoul World Cup Stadium. The lone goal was scored by Lee Tae-Seok in the 63rd minute. Despite the loss, goalkeeper Benjamin Asare impressed with a crucial penalty save against Hwang Hee-Chan. ',
+                date: '2 hours ago',
+                articleUrl: '/articles/climate-summit-agreement'
+            },
+            {
+                image: 'cedi.jpg',
+                category: 'Economy',
+                title: 'Cedi stability is everybody responsibility - BOG.',
+                description: 'Dr. Johnson Asiama, Governor of Bank of Ghana is urging Ghanaians to see the protection and stability of the cedi.',
+                date: '4 hours ago',
+                articleUrl: '/articles/quantum-computing-breakthrough'
+            },
+            {
+                image: 'trump.jpg',
+                category: 'International',
+                title: 'Saudi Crown Prince to visit US with defence,Ai,nuclear agenda',
+                description: 'A visit by Saudi Arabia de facto ruler to the White House for talks on Tuesday with U.S President.',
+                date: '6 hours ago',
+                articleUrl: '/articles/championship-upset'
+            }
+        ];
+
+        // News data
+        const newsData = [
+            {
+                category: 'Breaking',
+                title: 'Police arrests man for assulting his wife in viral video',
+                excerpt: 'A man arrested for physically assulting his wife in a viral Facebook video, at Ofankor.',
+                date: '2 hours ago',
+                image: 'police.jpg',
+                articleUrl: '/articles/trade-agreement'
+            },
+            {
+                category: 'Sports',
+                title: 'GFA Releases Support for Women League',
+                excerpt: 'The Ghana Football Association has released the first tranche of financial support to clubs participating in the 2025/26 Malta Guinness Women Premier League. Each of the 20 Premier League clubs received GH₵25,000, accumulating to a total of GHc500,000 ',
+                date: '4 hours ago',
+                image: 'women.jpg',
+                articleUrl: '/articles/tech-earnings'
+            },
+            {
+                category: 'International',
+                title: 'US-Saudi Relations',
+                excerpt: 'US President Donald Trump has designated Saudi Arabia as a major non-NATO ally, with agreements on military cooperation and investments',
+                date: '6 hours ago',
+                image: 'trump.jpg',
+                articleUrl: '/articles/energy-storage'
+            },
+            {
+                category: 'Crime',
+                title: 'NAIMOS team gets involved in a car accident',
+                excerpt: 'A NAIMOS Officer was killed, and four others were injured in a crash during anti-galamsey operation.',
+                date: '8 hours ago',
+                image: 'naimos.jpg',
+                articleUrl: '/articles/cancer-treatment'
+            },
+            {
+                category: 'Sports',
+                title: 'Ghana suffers defeat to South Korea ',
+                excerpt: 'Ghana suffers defeat to South Korea by a goal difference whiles it ends the Asia tour',
+                date: '10 hours ago',
+                image: 'football.jpg',
+                articleUrl: '/articles/world-record'
+            },
+            {
+                category: 'Science',
+                title: 'Mars Mission Discovers Evidence of Ancient Water Systems',
+                excerpt: 'Latest rover findings suggest Mars once had extensive river networks and possibly supported microbial life.',
+                date: '12 hours ago',
+                image: 'mars.jpg',
+                articleUrl: '/articles/mars-discovery'
+            }
+        ];
+
+        // Initialize slideshow
+        let currentSlide = 0;
+        const slideshowContainer = document.getElementById('slideshow');
+
+        // Create slides
+        slideshowData.forEach((slide, index) => {
+            const slideElement = document.createElement('div');
+            slideElement.className = `slide ${index === 0 ? 'active' : ''}`;
+            slideElement.style.backgroundImage = `url('${slide.image}')`;
+            slideElement.innerHTML = `
+                <div class="slide-content">
+                    <span class="slide-category">${slide.category}</span>
+                    <h2 class="slide-title">${slide.title}</h2>
+                    <p class="slide-description">${slide.description}</p>
+                    <p class="slide-date">📅 ${slide.date}</p>
+                </div>
+            `;
+            slideElement.style.cursor = 'pointer';
+            slideElement.onclick = () => window.location.href = slide.articleUrl;
+            slideshowContainer.appendChild(slideElement);
+        });
+
+        // Create navigation
+        const navDiv = document.createElement('div');
+        navDiv.className = 'slide-nav';
+        navDiv.innerHTML = `
+            <button onclick="changeSlide(-1)">‹</button>
+            <button onclick="changeSlide(1)">›</button>
+        `;
+        slideshowContainer.appendChild(navDiv);
+
+        // Create indicators
+        const indicatorsDiv = document.createElement('div');
+        indicatorsDiv.className = 'slide-indicators';
+        indicatorsDiv.id = 'indicators';
+        slideshowContainer.appendChild(indicatorsDiv);
+
+        const indicatorsContainer = document.getElementById('indicators');
+        slideshowData.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.onclick = () => goToSlide(index);
+            indicatorsContainer.appendChild(indicator);
+        });
+
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance slideshow
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Render news cards
+        const newsGrid = document.getElementById('newsGrid');
+        newsData.forEach(news => {
+            const card = document.createElement('div');
+            card.className = 'news-card';
+            card.onclick = () => window.location.href = news.articleUrl;
+            card.innerHTML = `
+                <div class="news-image" style="background-image: url('${news.image}')"></div>
+                <div class="news-content">
+                    <span class="news-category">${news.category}</span>
+                    <h3 class="news-title">${news.title}</h3>
+                    <p class="news-excerpt">${news.excerpt}</p>
+                    <div class="news-meta">
+                        <span class="news-date">${news.date}</span>
+                        <div class="share-buttons">
+                            <button class="share-btn share-facebook" onclick="event.stopPropagation(); prepareShareImage('${news.title.replace(/'/g, "\\'")}', '${news.excerpt.replace(/'/g, "\\'")}', '${news.category}', 'facebook')" title="Share on Facebook">f</button>
+                            <button class="share-btn share-twitter" onclick="event.stopPropagation(); prepareShareImage('${news.title.replace(/'/g, "\\'")}', '${news.excerpt.replace(/'/g, "\\'")}', '${news.category}', 'twitter')" title="Share on Twitter">𝕏</button>
+                            <button class="share-btn share-linkedin" onclick="event.stopPropagation(); prepareShareImage('${news.title.replace(/'/g, "\\'")}', '${news.excerpt.replace(/'/g, "\\'")}', '${news.category}', 'linkedin')" title="Share on LinkedIn">in</button>
+                            <button class="share-btn share-whatsapp" onclick="event.stopPropagation(); prepareShareImage('${news.title.replace(/'/g, "\\'")}', '${news.excerpt.replace(/'/g, "\\'")}', '${news.category}', 'whatsapp')" title="Share on WhatsApp">⟳</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            newsGrid.appendChild(card);
+        });
+
+        let currentShareData = null;
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+
+            lines.forEach((line, index) => {
+                ctx.fillText(line.trim(), x, y + (index * lineHeight));
+            });
+
+            return lines.length * lineHeight;
+        }
+
+        function prepareShareImage(title, excerpt, category, platform) {
+            currentShareData = { title, excerpt, category, platform };
+            
+            const canvas = document.getElementById('hiddenCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 1200;
+            canvas.height = 630;
+            
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f0f1e');
+            gradient.addColorStop(0.5, '#1a1a2e');
+            gradient.addColorStop(1, '#0f0f1e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.12)';
+            ctx.beginPath();
+            ctx.arc(150, 150, 200, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(255, 217, 61, 0.12)';
+            ctx.beginPath();
+            ctx.arc(1050, 480, 250, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+            
+            ctx.strokeStyle = 'rgba(255, 217, 61, 0.6)';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+            
+            const headerGradient = ctx.createLinearGradient(0, 0, 500, 0);
+            headerGradient.addColorStop(0, '#ff6b6b');
+            headerGradient.addColorStop(1, '#ffd93d');
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.15)';
+            ctx.fillRect(50, 50, canvas.width - 100, 100);
+            
+            ctx.font = 'bold 52px Arial';
+            ctx.fillStyle = headerGradient;
+            ctx.fillText('📰 THESAURUS MEDIA', 80, 115);
+            
+            const categoryColors = {
+                'World': '#667eea',
+                'Business': '#f5576c',
+                'Technology': '#00f2fe',
+                'Health': '#38f9d7',
+                'Sports': '#fee140',
+                'Crime': '#34ed84',
+                'International':' #6bdaff;',
+                'Science': '#330867'
+            };
+            
+            const categoryColor = categoryColors[category] || '#ff6b6b';
+            ctx.fillStyle = categoryColor;
+            ctx.fillRect(80, 180, 180, 50);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 22px Arial';
+            ctx.fillText(category.toUpperCase(), 95, 212);
+            
+            const lineGradient = ctx.createLinearGradient(80, 0, canvas.width - 80, 0);
+            lineGradient.addColorStop(0, '#ff6b6b');
+            lineGradient.addColorStop(0.5, '#ffd93d');
+            lineGradient.addColorStop(1, '#ff6b6b');
+            ctx.strokeStyle = lineGradient;
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(80, 250);
+            ctx.lineTo(canvas.width - 80, 250);
+            ctx.stroke();
+            
+            ctx.font = 'bold 48px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            
+            const titleHeight = wrapText(ctx, title, 80, 310, canvas.width - 160, 58);
+            
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            ctx.font = '28px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            wrapText(ctx, excerpt, 80, 310 + titleHeight + 30, canvas.width - 160, 40);
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.fillRect(50, canvas.height - 110, canvas.width - 100, 60);
+            
+            ctx.font = 'bold 32px Arial';
+            ctx.fillStyle = headerGradient;
+            ctx.fillText('🔗 www.globalnews.com', 80, canvas.height - 65);
+            
+            ctx.font = '24px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillText('Read the full story online', canvas.width - 420, canvas.height - 65);
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.4)';
+            ctx.beginPath();
+            ctx.moveTo(50, 50);
+            ctx.lineTo(100, 50);
+            ctx.lineTo(50, 100);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(canvas.width - 50, canvas.height - 50);
+            ctx.lineTo(canvas.width - 100, canvas.height - 50);
+            ctx.lineTo(canvas.width - 50, canvas.height - 100);
+            ctx.closePath();
+            ctx.fill();
+            
+            const previewCanvas = document.getElementById('previewCanvas');
+            const previewCtx = previewCanvas.getContext('2d');
+            
+            const scale = 0.5;
+            previewCanvas.width = canvas.width * scale;
+            previewCanvas.height = canvas.height * scale;
+            
+            previewCtx.drawImage(canvas, 0, 0, previewCanvas.width, previewCanvas.height);
+            
+            document.getElementById('imageModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('show');
+        }
+
+        function downloadImage() {
+            const canvas = document.getElementById('hiddenCanvas');
+            const link = document.createElement('a');
+            const fileName = `globalnews_${currentShareData.category.toLowerCase()}_${Date.now()}.png`;
+            
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            showToast('📥 Image downloaded successfully!');
+        }
+
+        function shareToSocial() {
+            const canvas = document.getElementById('hiddenCanvas');
+            
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'globalnews.png', { type: 'image/png' });
+                
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: currentShareData.title,
+                        text: currentShareData.excerpt + '\n\nRead more at: www.globalnews.com'
+                    })
+                    .then(() => {
+                        showToast('🎉 Shared successfully!');
+                        closeModal();
+                    })
+                    .catch((error) => {
+                        console.log('Share failed:', error);
+                        fallbackShare();
+                    });
+                } else {
+                    fallbackShare();
+                }
+            });
+        }
+
+        function fallbackShare() {
+            const platform = currentShareData.platform;
+            const text = encodeURIComponent(currentShareData.title + '\n\n' + currentShareData.excerpt + '\n\nRead more: www.globalnews.com');
+            const url = encodeURIComponent(window.location.href);
+            
+            let shareUrl;
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${text}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                showToast('📤 Opening share dialog... Download the image to attach it!');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') {
+                closeModal();
+            }
+        });
+
+        // Add hover effect to news cards
+        document.querySelectorAll('.news-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

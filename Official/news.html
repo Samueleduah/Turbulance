@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News - Thesaurus Media </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff6b6b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 100px auto 3rem;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .filter-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-color: transparent;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .trending-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 217, 61, 0.15));
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .trending-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .trending-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .trending-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .trending-tag:hover {
+            background: rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+            transform: translateY(-3px);
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .featured-news {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .featured-article {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+            cursor: pointer;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .featured-article:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .news-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .badge-breaking {
+            background: rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .badge-world { background: rgba(102, 126, 234, 0.2); color: #667eea; }
+        .badge-business { background: rgba(245, 87, 108, 0.2); color: #f5576c; }
+        .badge-technology { background: rgba(0, 242, 254, 0.2); color: #00f2fe; }
+        .badge-health { background: rgba(56, 249, 215, 0.2); color: #38f9d7; }
+        .badge-sports { background: rgba(254, 225, 64, 0.2); color: #fee140; }
+        .badge-science { background: rgba(51, 8, 103, 0.3); color: #a78bfa; }
+
+        .article-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .share-facebook { background: #1877f2; }
+        .share-twitter { background: #1da1f2; }
+        .share-linkedin { background: #0077b5; }
+        .share-whatsapp { background: #25d366; }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-article {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-article:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-article:hover {
+            transform: translateX(5px);
+        }
+
+        .sidebar-article-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .sidebar-article-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 30, 0.98);
+            padding: 2.5rem;
+            border-radius: 25px;
+            max-width: 700px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 107, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            animation: scaleIn 0.4s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(255, 107, 107, 0.3);
+        }
+
+        .preview-canvas-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        #previewCanvas {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-share-social {
+            background: rgba(29, 161, 242, 0.9);
+            color: white;
+        }
+
+        .btn-share-social:hover {
+            transform: translateY(-3px);
+        }
+
+        #hiddenCanvas {
+            display: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 4000;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .featured-image {
+                height: 250px;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Thesaurus Media</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html"class="active">News</a></li>
+                    <li><a href="quotes.html" >Quotes</a></li>
+                    <li><a href="about.html" >About & contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">📰 Latest News</h1>
+            <p class="page-subtitle">Stay informed with breaking news and in-depth coverage from around the world</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterNews('all')">All News</button>
+                <button class="filter-btn" onclick="filterNews('world')">World</button>
+                <button class="filter-btn" onclick="filterNews('business')">Business</button>
+                <button class="filter-btn" onclick="filterNews('technology')">Technology</button>
+                <button class="filter-btn" onclick="filterNews('health')">Health</button>
+                <button class="filter-btn" onclick="filterNews('sports')">Sports</button>
+                <button class="filter-btn" onclick="filterNews('science')">Science</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search news articles...">
+                <button class="search-btn" onclick="searchNews()">🔍 Search</button>
+            </div>
+        </div>
+
+        <div class="trending-section">
+            <h2 class="trending-title">🔥 Trending Topics</h2>
+            <div class="trending-tags">
+                <span class="trending-tag">#ClimateChange</span>
+                <span class="trending-tag">#AI</span>
+                <span class="trending-tag">#Elections2025</span>
+                <span class="trending-tag">#Economy</span>
+                <span class="trending-tag">#SpaceExploration</span>
+                <span class="trending-tag">#Healthcare</span>
+                <span class="trending-tag">#CyberSecurity</span>
+            </div>
+        </div>
+
+        <div class="news-container">
+            <div class="featured-news" id="featuredNews"></div>
+            
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">🔥 Most Popular</h3>
+                    <div id="popularNews"></div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">⏰ Latest Updates</h3>
+                    <div id="latestNews"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">More News Stories</h2>
+        <div class="news-grid" id="newsGrid"></div>
+    </main>
+
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📸 Share News Image</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="preview-canvas-container">
+                <canvas id="previewCanvas"></canvas>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn btn-download" onclick="downloadImage()">⬇️ Download</button>
+                <button class="modal-btn btn-share-social" onclick="shareToSocial()">🚀 Share</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="hiddenCanvas"></canvas>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const newsArticles = [
+            {
+                id: 1,
+               category: 'Breaking',
+                title: 'Police arrests man for assulting his wife in viral video',
+                excerpt: 'A man arrested for physically assulting his wife in a viral Facebook video, at Ofankor.',
+                date: '2 hours ago',
+                image: 'police.jpg',
+                views: '125K',
+                articleUrl: '/articles/climate-summit-carbon-neutrality-agreement',
+                featured: true
+            },
+            {
+                id: 2,
+                 category: 'International',
+                title: 'US-Saudi Relations',
+                excerpt: 'US President Donald Trump has designated Saudi Arabia as a major non-NATO ally, with agreements on military cooperation and investments',
+                date: '6 hours ago',
+                image: 'trump.jpg',
+                views: '98K',
+                articleUrl: '/articles/quantum-computer-breakthrough',
+                featured: true
+            },
+            {
+                id: 3,
+                category: 'Sports',
+                title: 'Ghana suffers defeat to South Korea ',
+                excerpt: 'Ghana suffers defeat to South Korea by a goal difference whiles it ends the Asia tour',
+                date: '10 hours ago',
+                image: 'football.jpg',
+                articleUrl: '/articles/tech-giants-record-earnings'
+            },
+            {
+                id: 4,
+                category: 'health',
+                title: 'New Cancer Treatment Shows 85% Success Rate in Clinical Trials',
+                excerpt: 'Groundbreaking immunotherapy approach demonstrates remarkable effectiveness against aggressive cancers, offering new hope to millions.',
+                date: '8 hours ago',
+                views: '112K',
+                image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800&h=600&fit=crop',
+                articleUrl: '/articles/cancer-treatment-breakthrough'
+            },
+            {
+                id: 5,
+                category: 'world',
+                title: 'International Trade Agreement Reshapes Global Economic Landscape',
+                excerpt: 'Historic trade deal between major economies expected to boost global GDP by 2.5% and create millions of new jobs worldwide.',
+                date: '10 hours ago',
+                views: '67K',
+                image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop',
+                articleUrl: '/articles/international-trade-agreement'
+            },
+            {
+                id: 6,
+                category: 'sports',
+                title: 'Olympic Athlete Shatters 20-Year-Old World Record',
+                excerpt: 'Stunning performance at international championships breaks long-standing record by significant margin, captivating sports fans globally.',
+                date: '12 hours ago',
+                views: '89K',
+                image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=600&fit=crop',
+                articleUrl: '/articles/olympic-world-record'
+            },
+            {
+                id: 7,
+                category: 'science',
+                title: 'Mars Rover Discovers Evidence of Ancient Water Systems',
+                excerpt: 'Latest findings suggest Mars once had extensive river networks and may have supported microbial life billions of years ago.',
+                date: '14 hours ago',
+                views: '93K',
+                image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800&h=600&fit=crop',
+                articleUrl: '/articles/mars-rover-water-discovery'
+            },
+            {
+                id: 8,
+                category: 'technology',
+                title: 'Breakthrough in Renewable Energy Storage Technology',
+                excerpt: 'New battery system can store solar energy for months, potentially revolutionizing green energy adoption worldwide.',
+                date: '16 hours ago',
+                views: '71K',
+                image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop',
+                articleUrl: '/articles/renewable-energy-storage-breakthrough'
+            },
+            {
+                id: 9,
+                category: 'world',
+                title: 'Diplomatic Breakthrough Ends Decades-Long Regional Conflict',
+                excerpt: 'Peace agreement signed after intensive negotiations brings hope for stability and economic development to war-torn region.',
+                date: '18 hours ago',
+                views: '58K',
+                image: 'https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=800&h=600&fit=crop',
+                articleUrl: '/articles/diplomatic-peace-agreement'
+            },
+            {
+                id: 10,
+                category: 'business',
+                title: 'Stock Markets Hit All-Time Highs Amid Economic Recovery',
+                excerpt: 'Global markets surge as economic indicators show robust recovery, with unemployment at historic lows and consumer confidence rising.',
+                date: '20 hours ago',
+                views: '64K',
+                image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop',
+                articleUrl: '/articles/stock-markets-all-time-highs'
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentShareData = null;
+
+        function renderNews() {
+            renderFeaturedNews();
+            renderSidebarNews();
+            renderNewsGrid();
+        }
+
+        function renderFeaturedNews() {
+            const container = document.getElementById('featuredNews');
+            const featured = newsArticles.filter(article => article.featured);
+            
+            container.innerHTML = featured.map(article => `
+                <div class="featured-article" onclick="readArticle(${article.id})">
+                    <div class="featured-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('${article.image}') center/cover no-repeat"></div>
+                    <div class="featured-content">
+                        <span class="news-badge badge-${article.category}">${article.category.toUpperCase()}</span>
+                        <h2 class="article-title">${article.title}</h2>
+                        <p class="article-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <div class="meta-info">
+                                <span>📅 ${article.date}</span>
+                                <span>👁️ ${article.views} views</span>
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-btn share-facebook" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'facebook')" title="Share on Facebook">f</button>
+                                <button class="share-btn share-twitter" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'twitter')" title="Share on Twitter">𝕏</button>
+                                <button class="share-btn share-linkedin" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'linkedin')" title="Share on LinkedIn">in</button>
+                                <button class="share-btn share-whatsapp" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'whatsapp')" title="Share on WhatsApp">💬</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSidebarNews() {
+            const popular = document.getElementById('popularNews');
+            const latest = document.getElementById('latestNews');
+            
+            const sortedByViews = [...newsArticles].sort((a, b) => 
+                parseInt(b.views) - parseInt(a.views)
+            ).slice(0, 5);
+            
+            popular.innerHTML = sortedByViews.map(article => `
+                <div class="sidebar-article" onclick="readArticle(${article.id})" style="cursor: pointer;">
+                    <h4 class="sidebar-article-title">${article.title}</h4>
+                    <p class="sidebar-article-date">${article.date} • ${article.views} views</p>
+                </div>
+            `).join('');
+            
+            const recentArticles = newsArticles.slice(0, 5);
+            latest.innerHTML = recentArticles.map(article => `
+                <div class="sidebar-article" onclick="readArticle(${article.id})" style="cursor: pointer;">
+                    <h4 class="sidebar-article-title">${article.title}</h4>
+                    <p class="sidebar-article-date">${article.date}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderNewsGrid() {
+            const container = document.getElementById('newsGrid');
+            const gridArticles = newsArticles.filter(article => !article.featured);
+            
+            container.innerHTML = gridArticles.map(article => `
+                <div class="news-card" onclick="readArticle(${article.id})">
+                    <div class="news-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('${article.image}') center/cover"></div>
+                    <div class="news-content">
+                        <span class="news-category badge-${article.category}">${article.category.toUpperCase()}</span>
+                        <h3 class="news-title">${article.title}</h3>
+                        <p class="news-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <div class="meta-info">
+                                <span>📅 ${article.date}</span>
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-btn share-facebook" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'facebook')" title="Share">f</button>
+                                <button class="share-btn share-twitter" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'twitter')" title="Share">𝕏</button>
+                                <button class="share-btn share-linkedin" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'linkedin')" title="Share">in</button>
+                                <button class="share-btn share-whatsapp" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'whatsapp')" title="Share">💬</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterNews(category) {
+            currentFilter = category;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (category === 'all') {
+                renderNews();
+            } else {
+                const filtered = newsArticles.filter(article => article.category === category);
+                
+                const container = document.getElementById('newsGrid');
+                container.innerHTML = filtered.map(article => `
+                    <div class="news-card" onclick="readArticle(${article.id})">
+                        <div class="news-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('${article.image}') center/cover"></div>
+                        <div class="news-content">
+                            <span class="news-category badge-${article.category}">${article.category.toUpperCase()}</span>
+                            <h3 class="news-title">${article.title}</h3>
+                            <p class="news-excerpt">${article.excerpt}</p>
+                            <div class="article-meta">
+                                <div class="meta-info">
+                                    <span>📅 ${article.date}</span>
+                                </div>
+                                <div class="share-buttons">
+                                    <button class="share-btn share-facebook" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'facebook')">f</button>
+                                    <button class="share-btn share-twitter" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'twitter')">𝕏</button>
+                                    <button class="share-btn share-linkedin" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'linkedin')">in</button>
+                                    <button class="share-btn share-whatsapp" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'whatsapp')">💬</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function searchNews() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderNews();
+                return;
+            }
+            
+            const filtered = newsArticles.filter(article => 
+                article.title.toLowerCase().includes(searchTerm) ||
+                article.excerpt.toLowerCase().includes(searchTerm)
+            );
+            
+            const container = document.getElementById('newsGrid');
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: rgba(255, 255, 255, 0.6); grid-column: 1/-1;">No articles found matching your search.</p>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(article => `
+                <div class="news-card" onclick="readArticle(${article.id})">
+                    <div class="news-image" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('${article.image}') center/cover"></div>
+                    <div class="news-content">
+                        <span class="news-category badge-${article.category}">${article.category.toUpperCase()}</span>
+                        <h3 class="news-title">${article.title}</h3>
+                        <p class="news-excerpt">${article.excerpt}</p>
+                        <div class="article-meta">
+                            <div class="meta-info">
+                                <span>📅 ${article.date}</span>
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-btn share-facebook" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'facebook')">f</button>
+                                <button class="share-btn share-twitter" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'twitter')">𝕏</button>
+                                <button class="share-btn share-linkedin" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'linkedin')">in</button>
+                                <button class="share-btn share-whatsapp" onclick="event.stopPropagation(); prepareShareImage(${article.id}, 'whatsapp')">💬</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function readArticle(id) {
+            const article = newsArticles.find(a => a.id === id);
+            if (article && article.articleUrl) {
+                window.location.href = article.articleUrl;
+            } else {
+                showToast('📖 Article link not available yet');
+            }
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+
+            lines.forEach((line, index) => {
+                ctx.fillText(line.trim(), x, y + (index * lineHeight));
+            });
+
+            return lines.length * lineHeight;
+        }
+
+        function prepareShareImage(articleId, platform) {
+            const article = newsArticles.find(a => a.id === articleId);
+            if (!article) return;
+            
+            currentShareData = { article, platform };
+            
+            const canvas = document.getElementById('hiddenCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 1200;
+            canvas.height = 630;
+            
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f0f1e');
+            gradient.addColorStop(0.5, '#1a1a2e');
+            gradient.addColorStop(1, '#0f0f1e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.12)';
+            ctx.beginPath();
+            ctx.arc(150, 150, 200, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(255, 217, 61, 0.12)';
+            ctx.beginPath();
+            ctx.arc(1050, 480, 250, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 10;
+            ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+            
+            ctx.strokeStyle = 'rgba(255, 217, 61, 0.6)';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+            
+            const headerGradient = ctx.createLinearGradient(0, 0, 500, 0);
+            headerGradient.addColorStop(0, '#ff6b6b');
+            headerGradient.addColorStop(1, '#ffd93d');
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.15)';
+            ctx.fillRect(50, 50, canvas.width - 100, 100);
+            
+            ctx.font = 'bold 52px Arial';
+            ctx.fillStyle = headerGradient;
+            ctx.fillText('📰 THESAURUS MEDIA', 80, 115);
+            
+            const categoryColors = {
+                'breaking': '#ff6b6b',
+                'world': '#667eea',
+                'business': '#f5576c',
+                'technology': '#00f2fe',
+                'health': '#38f9d7',
+                'sports': '#fee140',
+                'science': '#a78bfa'
+            };
+            
+            const categoryColor = categoryColors[article.category] || '#ff6b6b';
+            ctx.fillStyle = categoryColor;
+            ctx.fillRect(80, 180, 200, 50);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 22px Arial';
+            ctx.fillText(article.category.toUpperCase(), 95, 212);
+            
+            const lineGradient = ctx.createLinearGradient(80, 0, canvas.width - 80, 0);
+            lineGradient.addColorStop(0, '#ff6b6b');
+            lineGradient.addColorStop(0.5, '#ffd93d');
+            lineGradient.addColorStop(1, '#ff6b6b');
+            ctx.strokeStyle = lineGradient;
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(80, 250);
+            ctx.lineTo(canvas.width - 80, 250);
+            ctx.stroke();
+            
+            ctx.font = 'bold 48px Arial';
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            
+            const titleHeight = wrapText(ctx, article.title, 80, 310, canvas.width - 160, 58);
+            
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            ctx.font = '28px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            wrapText(ctx, article.excerpt, 80, 310 + titleHeight + 30, canvas.width - 160, 40);
+            
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.fillRect(50, canvas.height - 110, canvas.width - 100, 60);
+            
+            ctx.font = 'bold 32px Arial';
+            ctx.fillStyle = headerGradient;
+            ctx.fillText('🔗 www.Thesaurusmedia.com', 80, canvas.height - 65);
+            
+            ctx.font = '24px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillText('Read the full story online', canvas.width - 420, canvas.height - 65);
+            
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.4)';
+            ctx.beginPath();
+            ctx.moveTo(50, 50);
+            ctx.lineTo(100, 50);
+            ctx.lineTo(50, 100);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(canvas.width - 50, canvas.height - 50);
+            ctx.lineTo(canvas.width - 100, canvas.height - 50);
+            ctx.lineTo(canvas.width - 50, canvas.height - 100);
+            ctx.closePath();
+            ctx.fill();
+            
+            const previewCanvas = document.getElementById('previewCanvas');
+            const previewCtx = previewCanvas.getContext('2d');
+            
+            const scale = 0.5;
+            previewCanvas.width = canvas.width * scale;
+            previewCanvas.height = canvas.height * scale;
+            
+            previewCtx.drawImage(canvas, 0, 0, previewCanvas.width, previewCanvas.height);
+            
+            document.getElementById('imageModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('show');
+        }
+
+        function downloadImage() {
+            const canvas = document.getElementById('hiddenCanvas');
+            const link = document.createElement('a');
+            const fileName = `TM news_${currentShareData.article.category}_${Date.now()}.png`;
+            
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            showToast('📥 Image downloaded successfully!');
+        }
+
+        function shareToSocial() {
+            const canvas = document.getElementById('hiddenCanvas');
+            
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'TM news.png', { type: 'image/png' });
+                
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: currentShareData.article.title,
+                        text: currentShareData.article.excerpt + '\n\nRead more at: www.globalnews.com'
+                    })
+                    .then(() => {
+                        showToast('🎉 Shared successfully!');
+                        closeModal();
+                    })
+                    .catch(() => {
+                        fallbackShare();
+                    });
+                } else {
+                    fallbackShare();
+                }
+            });
+        }
+
+        function fallbackShare() {
+            const platform = currentShareData.platform;
+            const text = encodeURIComponent(currentShareData.article.title + '\n\n' + currentShareData.article.excerpt + '\n\nRead more: www.globalnews.com');
+            const url = encodeURIComponent(window.location.href);
+            
+            let shareUrl;
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${text}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                showToast('📤 Opening share dialog...');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchNews();
+            }
+        });
+
+        renderNews();
+    </script>
+</body>
+</html>

@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Contact-Thesaurus Media </title>
+    <style>
+                * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff6b6b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 100px auto 3rem;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 217, 61, 0.1));
+            border-radius: 30px;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section::before {
+            content: '✨';
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            font-size: 4rem;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-section::after {
+            content: '🌟';
+            position: absolute;
+            bottom: 30px;
+            right: 50px;
+            font-size: 4rem;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            animation: slideUp 0.8s ease-out backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .about-content strong {
+            color: #ffd93d;
+        }
+
+        .mission-vision {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mission-card, .vision-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card::before {
+            content: '🎯';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.2;
+        }
+
+        .vision-card::before {
+            content: '🔭';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.2;
+        }
+
+        .mission-card:hover, .vision-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+        }
+
+        .mission-card h3, .vision-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .social-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .social-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .social-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .social-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .social-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .social-handle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .followers {
+            background: rgba(255, 107, 107, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #ffd93d;
+            display: inline-block;
+        }
+
+        .social-card.facebook:hover {
+            border-color: #1877f2;
+            box-shadow: 0 20px 40px rgba(24, 119, 242, 0.4);
+        }
+
+        .social-card.twitter:hover {
+            border-color: #1da1f2;
+            box-shadow: 0 20px 40px rgba(29, 161, 242, 0.4);
+        }
+
+        .social-card.instagram:hover {
+            border-color: #e1306c;
+            box-shadow: 0 20px 40px rgba(225, 48, 108, 0.4);
+        }
+
+        .social-card.linkedin:hover {
+            border-color: #0077b5;
+            box-shadow: 0 20px 40px rgba(0, 119, 181, 0.4);
+        }
+
+        .social-card.youtube:hover {
+            border-color: #ff0000;
+            box-shadow: 0 20px 40px rgba(255, 0, 0, 0.4);
+        }
+
+        .social-card.tiktok:hover {
+            border-color: #00f2ea;
+            box-shadow: 0 20px 40px rgba(0, 242, 234, 0.4);
+        }
+
+        .contact-form-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateX(10px);
+            border-color: #ff6b6b;
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #ffd93d;
+        }
+
+        .info-content p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 4000;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-3deg); }
+            75% { transform: translateY(-5px) rotate(3deg); }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">Thesaurus Media</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="quotes.html">Quotes</a></li>
+                    <li><a href="about.html" class="active">About & contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1 class="page-title">About Thesaurus Media</h1>
+            <p class="page-subtitle">Your trusted source for breaking news, inspiring stories, and in-depth analysis from around the world.</p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">📖 Our Story</h2>
+            <div class="about-content">
+                <p>
+                    <strong>Thesaurus Media </strong> was founded with a singular mission: to deliver accurate, timely, and engaging news coverage to audiences worldwide. In an era of information overload, we stand as a beacon of journalistic integrity and innovation.
+                </p>
+                <p>
+                    Our team of dedicated journalists, editors, and content creators work around the clock to bring you the most important stories from every corner of the globe. From breaking news and political developments to technology breakthroughs and inspiring human interest stories, we cover it all.
+                </p>
+                <p>
+                    What sets us apart is our commitment to not just reporting the news, but understanding it. We provide context, analysis, and diverse perspectives that help our readers make sense of an increasingly complex world. Whether you're catching up on the day's headlines or diving deep into investigative reports, Global News Network is your companion in staying informed.
+                </p>
+                <p>
+                    Beyond traditional news coverage, we believe in the power of inspiration. Our <strong>Daily Inspiration</strong> section brings you motivational quotes and biblical wisdom to uplift your spirit and provide guidance through life's challenges.
+                </p>
+
+                <div class="mission-vision">
+                    <div class="mission-card">
+                        <h3>Our Mission</h3>
+                        <p>To inform, educate, and inspire our global audience through fearless journalism, comprehensive reporting, and meaningful storytelling that makes a difference in people's lives.</p>
+                    </div>
+                    <div class="vision-card">
+                        <h3>Our Vision</h3>
+                        <p>To become the world's most trusted and innovative news platform, where truth meets technology, and where every story has the power to create positive change.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">🌐 Connect With Us</h2>
+            <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; font-size: 1.1rem;">
+                Join our growing community across social media platforms. Get instant updates, engage with our content, and be part of the conversation.
+            </p>
+            <div class="social-media-grid">
+                <div class="social-card facebook" onclick="openSocial('facebook')">
+                    <span class="social-icon">📘</span>
+                    <h3>Facebook</h3>
+                    <p class="social-handle">@Thesaurusmedia</p>
+                    <span class="followers">2.5M Followers</span>
+                </div>
+
+                <div class="social-card twitter" onclick="openSocial('twitter')">
+                    <span class="social-icon">🐦</span>
+                    <h3>Twitter / X</h3>
+                    <p class="social-handle">@thesaurusmedia</p>
+                    <span class="followers">1.8M Followers</span>
+                </div>
+
+                <div class="social-card instagram" onclick="openSocial('instagram')">
+                    <span class="social-icon">📸</span>
+                    <h3>Instagram</h3>
+                    <p class="social-handle">@thesaurusmedia</p>
+                    <span class="followers">3.2M Followers</span>
+                </div>
+
+                <div class="social-card linkedin" onclick="openSocial('linkedin')">
+                    <span class="social-icon">💼</span>
+                    <h3>LinkedIn</h3>
+                    <p class="social-handle">thesaurusmedia</p>
+                    <span class="followers">850K Followers</span>
+                </div>
+
+                <div class="social-card youtube" onclick="openSocial('youtube')">
+                    <span class="social-icon">📺</span>
+                    <h3>YouTube</h3>
+                    <p class="social-handle">@thesaurusmediaTV</p>
+                    <span class="followers">4.1M Subscribers</span>
+                </div>
+
+                <div class="social-card tiktok" onclick="openSocial('tiktok')">
+                    <span class="social-icon">🎵</span>
+                    <h3>TikTok</h3>
+                    <p class="social-handle">@GthesaurusmediaHQ</p>
+                    <span class="followers">2.9M Followers</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">📧 Get In Touch</h2>
+            <div class="contact-form-container">
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="press">Press Release</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="correction">News Correction</option>
+                                <option value="tip">News Tip</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" required placeholder="Tell us what's on your mind..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">📤 Send Message</button>
+                </form>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-UmvWp3fPuRAhnhxYtljwM8keo3ghox5T90HCPa2taGLTRg/viewform?usp=header" target="_blank" >
+                        <button class="submit-btn">Contact us directly</button>
+                </a>
+            </div>
+
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h3>Head Office</h3>
+                        <p>123 Media Boulevard<br>New York, NY 10001<br>United States</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <div class="info-content">
+                        <h3>Phone</h3>
+                        <p>Main: +233 530 669 151<br>Newsroom: +1 (555) 123-4567<br>Press: +1 (555) 987-6543</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">✉️</div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p>General: info@thesaurusmedia.com<br>Editorial: samueleduah414@gmail.com<br>Press: press@thesaurusmedia.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast">
+        <span id="toastMessage">Message sent successfully!</span>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+            // Simulate form submission
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            showToast('✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon!');
+            
+            // Reset form
+            this.reset();
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        function openSocial(platform) {
+            const urls = {
+                facebook: 'https://facebook.com/GlobalNewsNetwork',
+                twitter: 'https://twitter.com/GlobalNewsNet',
+                instagram: 'https://instagram.com/GlobalNews',
+                linkedin: 'https://linkedin.com/company/global-news-network',
+                youtube: 'https://youtube.com/@GlobalNewsTV',
+                tiktok: 'https://tiktok.com/@GlobalNewsHQ'
+            };
+
+            const url = urls[platform];
+            if (url) {
+                window.open(url, '_blank');
+                showToast(`🚀 Opening ${platform.charAt(0).toUpperCase() + platform.slice(1)}...`);
+            }
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

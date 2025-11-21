@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesaurus Media</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff6b6b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+         .logo-img img{
+            width: 150px;
+            height: 130px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+            padding: 0;
+            margin: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-top: 8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            border-color: transparent;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .quote-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 10rem;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .quote-card.motivational {
+            border-left: 4px solid #ffd93d;
+        }
+
+        .quote-card.biblical {
+            border-left: 4px solid #6ec1e4;
+        }
+
+        .quote-type {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .quote-type.motivational {
+            background: rgba(255, 217, 61, 0.2);
+            color: #ffd93d;
+        }
+
+        .quote-type.biblical {
+            background: rgba(110, 193, 228, 0.2);
+            color: #6ec1e4;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.95);
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quote-reference {
+            font-size: 0.95rem;
+            color: rgba(110, 193, 228, 0.9);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .quote-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .like-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .like-btn:hover {
+            background: rgba(255, 107, 107, 0.3);
+            transform: scale(1.05);
+        }
+
+        .like-btn.liked {
+            background: rgba(255, 107, 107, 0.4);
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.15) rotate(10deg);
+        }
+
+        .share-facebook {
+            background: #1877f2;
+        }
+
+        .share-twitter {
+            background: #1da1f2;
+        }
+
+        .share-whatsapp {
+            background: #25d366;
+        }
+
+        .share-copy {
+            background: #6c757d;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quote-card:nth-child(1) { animation-delay: 0.1s; }
+        .quote-card:nth-child(2) { animation-delay: 0.2s; }
+        .quote-card:nth-child(3) { animation-delay: 0.3s; }
+        .quote-card:nth-child(4) { animation-delay: 0.4s; }
+        .quote-card:nth-child(5) { animation-delay: 0.5s; }
+        .quote-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .daily-quote-highlight {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 217, 61, 0.2));
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out 0.3s backwards;
+        }
+
+        .daily-quote-highlight::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 3rem;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .daily-quote-highlight::after {
+            content: '✨';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3rem;
+            animation: twinkle 2s ease-in-out infinite 1s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .daily-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .daily-text {
+            font-size: 2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .daily-author {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-5deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 30, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 107, 107, 0.5);
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            color: #ff6b6b;
+        }
+
+        .preview-canvas-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        #previewCanvas {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-share-social {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-share-social:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .quotes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .daily-text {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Hidden canvas for rendering */
+        #hiddenCanvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+             <div class="logo-img">
+                <img src="TM logo.png">
+            </div>
+            
+            <div class="logo">
+                <div class="logo">Thesaurus Media</div>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="quotes.html"class="active">Quotes</a></li>
+                    <li><a href="about.html">About & contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">✨ Daily Inspiration ✨</h1>
+            <p class="page-subtitle">Find motivation, wisdom, and spiritual guidance to brighten your day</p>
+        </div>
+
+        <div class="daily-quote-highlight">
+            <span class="daily-label">🌟 Quote of the Day</span>
+            <p class="daily-text">"The only way to do great work is to love what you do."</p>
+            <p class="daily-author">— Steve Jobs</p>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterQuotes('all')">All Quotes</button>
+            <button class="filter-btn" onclick="filterQuotes('motivational')">Motivational</button>
+            <button class="filter-btn" onclick="filterQuotes('biblical')">Biblical</button>
+        </div>
+
+        <div class="quotes-grid" id="quotesGrid"></div>
+    </main>
+
+    <!-- Modal for image preview -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">📸 Your Shareable Image</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="preview-canvas-container">
+                <canvas id="previewCanvas"></canvas>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn btn-download" onclick="downloadImage()">
+                    ⬇️ Download Image
+                </button>
+                <button class="modal-btn btn-share-social" onclick="shareToSocial()">
+                    🔗 Share to Social Media
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="hiddenCanvas"></canvas>
+
+    <div class="toast" id="toast">
+        <span id="toastMessage">Quote shared successfully!</span>
+    </div>
+
+    <script>
+        const quotes = [
+            {
+                type: 'motivational',
+                text: 'Success is not final, failure is not fatal: it is the courage to continue that counts.',
+                author: 'Winston Churchill'
+            },
+            {
+                type: 'biblical',
+                text: 'I can do all things through Christ who strengthens me.',
+                reference: 'Philippians 4:13',
+                author: 'The Apostle Paul'
+            },
+            {
+                type: 'motivational',
+                text: 'The future belongs to those who believe in the beauty of their dreams.',
+                author: 'Eleanor Roosevelt'
+            },
+            {
+                type: 'biblical',
+                text: 'Trust in the Lord with all your heart and lean not on your own understanding.',
+                reference: 'Proverbs 3:5',
+                author: 'King Solomon'
+            },
+            {
+                type: 'motivational',
+                text: 'Believe you can and you\'re halfway there.',
+                author: 'Theodore Roosevelt'
+            },
+            {
+                type: 'biblical',
+                text: 'For God has not given us a spirit of fear, but of power and of love and of a sound mind.',
+                reference: '2 Timothy 1:7',
+                author: 'The Apostle Paul'
+            },
+            {
+                type: 'motivational',
+                text: 'The only impossible journey is the one you never begin.',
+                author: 'Tony Robbins'
+            },
+            {
+                type: 'biblical',
+                text: 'Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.',
+                reference: 'Joshua 1:9',
+                author: 'God to Joshua'
+            },
+            {
+                type: 'motivational',
+                text: 'Your time is limited, don\'t waste it living someone else\'s life.',
+                author: 'Steve Jobs'
+            },
+            {
+                type: 'biblical',
+                text: 'But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles.',
+                reference: 'Isaiah 40:31',
+                author: 'Prophet Isaiah'
+            },
+            {
+                type: 'motivational',
+                text: 'The best time to plant a tree was 20 years ago. The second best time is now.',
+                author: 'Chinese Proverb'
+            },
+            {
+                type: 'biblical',
+                text: 'The Lord is my shepherd; I shall not want. He makes me lie down in green pastures.',
+                reference: 'Psalm 23:1-2',
+                author: 'King David'
+            },
+            {
+                type: 'motivational',
+                text: 'Don\'t watch the clock; do what it does. Keep going.',
+                author: 'Sam Levenson'
+            },
+            {
+                type: 'biblical',
+                text: 'Cast all your anxiety on him because he cares for you.',
+                reference: '1 Peter 5:7',
+                author: 'The Apostle Peter'
+            },
+            {
+                type: 'motivational',
+                text: 'The way to get started is to quit talking and begin doing.',
+                author: 'Walt Disney'
+            },
+            {
+                type: 'biblical',
+                text: 'And we know that in all things God works for the good of those who love him.',
+                reference: 'Romans 8:28',
+                author: 'The Apostle Paul'
+            }
+        ];
+
+        let currentFilter = 'all';
+        let likesData = {};
+        let currentShareData = null;
+
+        function renderQuotes(filter = 'all') {
+            const grid = document.getElementById('quotesGrid');
+            grid.innerHTML = '';
+
+            const filteredQuotes = filter === 'all' 
+                ? quotes 
+                : quotes.filter(q => q.type === filter);
+
+            filteredQuotes.forEach((quote, index) => {
+                const card = document.createElement('div');
+                card.className = `quote-card ${quote.type}`;
+                card.setAttribute('data-type', quote.type);
+
+                const typeLabel = quote.type === 'biblical' ? '📖 Biblical' : '💪 Motivational';
+                const reference = quote.reference ? `<div class="quote-reference">${quote.reference}</div>` : '';
+                const likes = likesData[index] || 0;
+                const isLiked = localStorage.getItem(`liked_${index}`) === 'true';
+
+                card.innerHTML = `
+                    <span class="quote-type ${quote.type}">${typeLabel}</span>
+                    <div class="quote-text">${quote.text}</div>
+                    <div class="quote-author">— ${quote.author}</div>
+                    ${reference}
+                    <div class="quote-actions">
+                        <button class="like-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${index}, this)">
+                            ❤️ <span id="likes-${index}">${likes}</span>
+                        </button>
+                        <div class="share-buttons">
+                            <button class="share-btn share-facebook" onclick="prepareShareImage(${index}, 'facebook')" title="Share on Facebook">f</button>
+                            <button class="share-btn share-twitter" onclick="prepareShareImage(${index}, 'twitter')" title="Share on Twitter">𝕏</button>
+                            <button class="share-btn share-whatsapp" onclick="prepareShareImage(${index}, 'whatsapp')" title="Share on WhatsApp">💬</button>
+                            <button class="share-btn share-copy" onclick="prepareShareImage(${index}, 'download')" title="Download Image">📋</button>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function filterQuotes(type) {
+            currentFilter = type;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const grid = document.getElementById('quotesGrid');
+            grid.style.opacity = '0';
+            
+            setTimeout(() => {
+                renderQuotes(type);
+                grid.style.opacity = '1';
+            }, 300);
+        }
+
+        function toggleLike(index, button) {
+            const likesSpan = document.getElementById(`likes-${index}`);
+            const isLiked = localStorage.getItem(`liked_${index}`) === 'true';
+            
+            if (isLiked) {
+                likesData[index] = (likesData[index] || 0) - 1;
+                localStorage.removeItem(`liked_${index}`);
+                button.classList.remove('liked');
+            } else {
+                likesData[index] = (likesData[index] || 0) + 1;
+                localStorage.setItem(`liked_${index}`, 'true');
+                button.classList.add('liked');
+            }
+            
+            likesSpan.textContent = likesData[index];
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+
+            lines.forEach((line, index) => {
+                ctx.fillText(line, x, y + (index * lineHeight));
+            });
+
+            return lines.length * lineHeight;
+        }
+
+        function prepareShareImage(quoteIndex, platform) {
+            const quote = quotes[quoteIndex];
+            currentShareData = { quote, platform, index: quoteIndex };
+            
+            const canvas = document.getElementById('hiddenCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = 1200;
+            canvas.height = 630;
+            
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f0f1e');
+            gradient.addColorStop(1, '#1a1a2e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add decorative circles
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.1)';
+            ctx.beginPath();
+            ctx.arc(100, 100, 150, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'rgba(255, 217, 61, 0.1)';
+            ctx.beginPath();
+            ctx.arc(1100, 530, 200, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Add border
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            // Add logo
+            ctx.font = 'bold 40px Arial';
+            const logoGradient = ctx.createLinearGradient(0, 0, 400, 0);
+            logoGradient.addColorStop(0, '#ff6b6b');
+            logoGradient.addColorStop(1, '#ffd93d');
+            ctx.fillStyle = logoGradient;
+            ctx.fillText('Theaurus Media', 60, 100);
+            
+            // Add quote type badge
+            const typeText = quote.type === 'biblical' ? '📖 BIBLICAL' : '💪 MOTIVATIONAL';
+            const badgeColor = quote.type === 'biblical' ? '#6ec1e4' : '#ffd93d';
+            ctx.fillStyle = badgeColor;
+            ctx.fillRect(60, 140, 200, 40);
+            ctx.fillStyle = '#0f0f1e';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText(typeText, 70, 165);
+            
+            // Add large decorative quote mark
+            ctx.font = 'bold 200px Georgia';
+            ctx.fillStyle = 'rgba(255, 107, 107, 0.15)';
+            ctx.fillText('"', 80, 350);
+            
+            // Add quote text
+            ctx.font = 'italic 42px Arial';
+            ctx.fillStyle = '#ffffff';
+            const maxWidth = canvas.width - 200;
+            const startY = 280;
+            const lineHeight = 60;
+            const textHeight = wrapText(ctx, quote.text, 100, startY, maxWidth, lineHeight);
+            
+            // Add author
+            ctx.font = 'bold 32px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('— ' + quote.author, 100, startY + textHeight + 40);
+            
+            // Add reference if biblical
+            if (quote.reference) {
+                ctx.font = '28px Arial';
+                ctx.fillStyle = '#6ec1e4';
+                ctx.fillText(quote.reference, 100, startY + textHeight + 85);
+            }
+            
+            // Add website link at bottom
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.fillText('🔗 thesaurusmedia.com/Quotes', 60, canvas.height - 60);
+            
+            // Add decorative line
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(60, canvas.height - 100);
+            ctx.lineTo(canvas.width - 60, canvas.height - 100);
+            ctx.stroke();
+            
+            // Show preview in modal
+            const previewCanvas = document.getElementById('previewCanvas');
+            const previewCtx = previewCanvas.getContext('2d');
+            
+            // Set preview canvas size (scaled down)
+            const scale = 0.5;
+            previewCanvas.width = canvas.width * scale;
+            previewCanvas.height = canvas.height * scale;
+            
+            // Draw scaled image
+            previewCtx.drawImage(canvas, 0, 0, previewCanvas.width, previewCanvas.height);
+            
+            // Show modal
+            document.getElementById('imageModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('show');
+        }
+
+        function downloadImage() {
+            const canvas = document.getElementById('hiddenCanvas');
+            const link = document.createElement('a');
+            const fileName = `quote_${currentShareData.index}_${Date.now()}.png`;
+            
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            showToast('Image downloaded successfully! 📥');
+        }
+
+        function shareToSocial() {
+            const canvas = document.getElementById('hiddenCanvas');
+            
+            // Convert canvas to blob
+            canvas.toBlob((blob) => {
+                const file = new File([blob], 'quote.png', { type: 'image/png' });
+                
+                // Check if Web Share API is supported
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        files: [file],
+                        title: 'Inspirational Quote',
+                        text: currentShareData.quote.text
+                    })
+                    .then(() => {
+                        showToast('Shared successfully! 🎉');
+                        closeModal();
+                    })
+                    .catch((error) => {
+                        console.log('Share failed:', error);
+                        fallbackShare();
+                    });
+                } else {
+                    fallbackShare();
+                }
+            });
+        }
+
+        function fallbackShare() {
+            const quote = currentShareData.quote;
+            const platform = currentShareData.platform;
+            const quoteText = `"${quote.text}" - ${quote.author}`;
+            const encodedText = encodeURIComponent(quoteText + '\n\nRead more at: globalnews.com/inspiration');
+            const url = encodeURIComponent(window.location.href);
+            
+            let shareUrl;
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?quote=${encodedText}&u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodedText}`;
+                    break;
+                case 'download':
+                    downloadImage();
+                    closeModal();
+                    return;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                showToast('Opening share dialog... Don\'t forget to download and attach the image! 📸');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') {
+                closeModal();
+            }
+        });
+
+        // Initialize quotes on page load
+        renderQuotes();
+
+        // Add smooth transition to grid
+        document.getElementById('quotesGrid').style.transition = 'opacity 0.3s ease';
+    </script>
+</body>
+</html>

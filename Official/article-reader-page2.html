@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Global News Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff6b6b;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 120px auto 3rem;
+            padding: 0 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .article-title {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out 0.3s backwards;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .share-section {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        .share-label {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .share-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .share-facebook {
+            background: #1877f2;
+        }
+
+        .share-twitter {
+            background: #1da1f2;
+        }
+
+        .share-linkedin {
+            background: #0077b5;
+        }
+
+        .share-whatsapp {
+            background: #25d366;
+        }
+
+        .share-copy {
+            background: #6c757d;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 3rem;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: scaleIn 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .feature-image::after {
+            content: 'Featured Image';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            opacity: 0.3;
+        }
+
+        .article-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .article-content p:nth-child(1) { animation-delay: 0.5s; }
+        .article-content p:nth-child(2) { animation-delay: 0.6s; }
+        .article-content p:nth-child(3) { animation-delay: 0.7s; }
+        .article-content p:nth-child(4) { animation-delay: 0.8s; }
+        .article-content p:nth-child(5) { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-content p:first-letter {
+            font-size: 3.5rem;
+            font-weight: bold;
+            float: left;
+            line-height: 1;
+            margin: 0.1rem 0.5rem 0 0;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid #ff6b6b;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 0 15px 15px 0;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tags-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tags-label {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tag:hover {
+            background: rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .related-articles {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .related-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        .related-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .related-content {
+            padding: 1.2rem;
+        }
+
+        .related-card-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .related-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .comment-section {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .submit-comment {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-comment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .comment-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #28a745;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .feature-image {
+                height: 300px;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .share-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">📰 GLOBAL NEWS</a>
+            <a href="#" class="back-button">← Back to Home</a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="article-header">
+                <span class="article-category">Technology</span>
+                <h1 class="article-title">AI Revolution: New Breakthrough in Quantum Computing Changes Everything</h1>
+                <div class="article-meta">
+                    <div class="meta-item">
+                        <div class="author-avatar">JD</div>
+                        <div>
+                            <div style="font-weight: bold; color: white;">Jane Doe</div>
+                            <div>Senior Technology Reporter</div>
+                        </div>
+                    </div>
+                    <div class="meta-item">📅 November 15, 2025</div>
+                    <div class="meta-item">⏱️ 8 min read</div>
+                    <div class="meta-item">👁️ 12.5K views</div>
+                </div>
+            </div>
+
+            <div class="share-section">
+                <span class="share-label">Share:</span>
+                <div class="share-buttons">
+                    <button class="share-btn share-facebook" onclick="shareArticle('facebook')">
+                        📘 Facebook
+                    </button>
+                    <button class="share-btn share-twitter" onclick="shareArticle('twitter')">
+                        𝕏 Twitter
+                    </button>
+                    <button class="share-btn share-linkedin" onclick="shareArticle('linkedin')">
+                        💼 LinkedIn
+                    </button>
+                    <button class="share-btn share-whatsapp" onclick="shareArticle('whatsapp')">
+                        💬 WhatsApp
+                    </button>
+                    <button class="share-btn share-copy" onclick="copyLink()">
+                        🔗 Copy Link
+                    </button>
+                </div>
+            </div>
+
+            <div class="feature-image"></div>
+
+            <div class="article-content">
+                <p>In a groundbreaking development that promises to reshape the future of computing, researchers at the Quantum Computing Institute have achieved what many thought impossible: a quantum processor that operates at 1000 times the speed of traditional supercomputers while maintaining unprecedented stability.</p>
+
+                <p>The breakthrough, announced early this morning at the International Technology Summit, represents years of painstaking research and represents a quantum leap forward in processing power. Dr. Michael Chen, lead researcher on the project, described the achievement as "the beginning of a new era in computational capabilities."</p>
+
+                <p>"What we've accomplished here goes beyond incremental improvement," Dr. Chen explained during the announcement. "We've fundamentally solved the coherence problem that has plagued quantum computing for decades. Our processors can now maintain quantum states for extended periods, making practical quantum computing a reality rather than a theoretical possibility."</p>
+
+                <h2>The Technical Marvel</h2>
+
+                <p>The new quantum processor utilizes a revolutionary approach to qubit stabilization, employing a novel cooling technique that maintains quantum coherence at temperatures closer to absolute zero than ever achieved before. This advancement allows the processor to perform complex calculations that would take traditional supercomputers thousands of years to complete, in mere minutes.</p>
+
+                <blockquote>
+                    "This isn't just faster computing – it's a fundamentally different way of solving problems. We're talking about capabilities that will transform everything from drug discovery to climate modeling to artificial intelligence." - Dr. Sarah Martinez, Quantum Physics Professor
+                </blockquote>
+
+                <p>The implications for artificial intelligence are particularly significant. Machine learning algorithms that currently require massive data centers and enormous energy consumption could potentially run on devices the size of a smartphone, opening up new possibilities for edge computing and decentralized AI systems.</p>
+
+                <h2>Real-World Applications</h2>
+
+                <p>Industry experts are already identifying numerous applications for this technology. In healthcare, quantum computing could accelerate drug discovery by simulating molecular interactions at an unprecedented scale. Financial institutions are exploring its potential for risk analysis and fraud detection. Climate scientists see opportunities for more accurate weather prediction and climate modeling.</p>
+
+                <p>The technology is expected to enter commercial production within the next three years, with several major tech companies already signing licensing agreements. While the initial cost will be substantial, analysts predict that economies of scale will make quantum computing accessible to mainstream enterprises within a decade.</p>
+
+                <p>Environmental benefits are also significant. Despite requiring extreme cooling, the efficiency gains mean these processors consume far less energy overall than the massive server farms they would replace, potentially reducing the tech industry's carbon footprint substantially.</p>
+
+                <h2>Looking Ahead</h2>
+
+                <p>As we stand on the brink of this quantum revolution, questions remain about security implications, particularly for encryption systems that could become vulnerable to quantum attack. However, researchers are already developing quantum-resistant encryption protocols to address these concerns.</p>
+
+                <p>The future that seemed distant just yesterday is arriving faster than anyone anticipated. As quantum computing moves from laboratory curiosity to practical tool, we're entering an era where the impossible becomes routine, and humanity's ability to solve complex problems takes a giant leap forward.</p>
+            </div>
+
+            <div class="tags-section">
+                <span class="tags-label">Tags:</span>
+                <div class="tags">
+                    <span class="tag">#QuantumComputing</span>
+                    <span class="tag">#Technology</span>
+                    <span class="tag">#Innovation</span>
+                    <span class="tag">#AI</span>
+                    <span class="tag">#Science</span>
+                    <span class="tag">#FutureTech</span>
+                </div>
+            </div>
+        </article>
+
+        <div class="related-articles">
+            <h2 class="related-title">Related Articles</h2>
+            <div class="related-grid">
+                <div class="related-card" onclick="loadArticle()">
+                    <div class="related-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="related-content">
+                        <h3 class="related-card-title">The Future of AI in Everyday Life</h3>
+                        <span class="related-date">November 14, 2025</span>
+                    </div>
+                </div>
+                <div class="related-card" onclick="loadArticle()">
+                    <div class="related-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="related-content">
+                        <h3 class="related-card-title">Tech Giants Race to Quantum Supremacy</h3>
+                        <span class="related-date">November 13, 2025</span>
+                    </div>
+                </div>
+                <div class="related-card" onclick="loadArticle()">
+                    <div class="related-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                    <div class="related-content">
+                        <h3 class="related-card-title">How Quantum Computing Will Transform Healthcare</h3>
+                        <span class="related-date">November 12, 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h2 class="comment-title">Comments (3)</h2>
+            <div class="comment-form">
+                <textarea class="comment-input" id="commentInput" placeholder="Share your thoughts..."></textarea>
+                <button class="submit-comment" onclick="submitComment()">Post Comment</button>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-avatar">AS</div>
+                        <div>
+                            <div class="comment-author">Alex Smith</div>
+                            <div class="comment-date">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="comment-text">This is absolutely fascinating! I've been following quantum computing research for years, and this breakthrough seems like exactly what the field needed. Can't wait to see practical applications.</div>
+                </div>
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">MJ</div>
+                        <div>
+                            <div class="comment-author">Maria Johnson</div>
+                            <div class="comment-date">5 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="comment-text">Great article! The implications for climate modeling are particularly exciting. We desperately need better tools to understand and predict climate change.</div>
+                </div>
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">RK</div>
+                        <div>
+                            <div class="comment-author">Robert Kim</div>
+                            <div class="comment-date">8 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="comment-text">The security implications are concerning though. We need to ensure quantum-resistant encryption is developed in parallel with this technology.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast" id="toast">Link copied to clipboard!</div>
+
+    <script>
+        function shareArticle(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('AI Revolution: New Breakthrough in Quantum Computing Changes Everything');
+            
+            let shareUrl;
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${title}%20${url}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function submitComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            
+            if (text === '') {
+                return;
+            }
+
+            const commentsList = document.getElementById('commentsList');
+            const comment = document.createElement('div');
+            comment.className = 'comment';
+            
+            const initials = 'YO';
+            const colors = [
+                'linear-gradient(135deg, #f093fb, #f5576c)',
+                'linear-gradient(135deg, #4facfe, #00f2fe)',
+                'linear-gradient(135deg, #43e97b, #38f9d7)',
+                'linear-gradient(135deg, #fa709a, #fee140)'
+            ];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            comment.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-avatar" style="background: ${randomColor};">${initials}</div>
+                    <div>
+                        <div class="comment-author">You</div>
+                        <div class="comment-date">Just now</div>
+                    </div>
+                </div>
+                <div class="comment-text">${text}</div>
+            `;
+            
+            commentsList.insertBefore(comment, commentsList.firstChild);
+            input.value = '';
+            
+            // Update comment count
+            const commentTitle = document.querySelector('.comment-title');
+            const currentCount = parseInt(commentTitle.textContent.match(/\d+/)[0]);
+            commentTitle.textContent = `Comments (${currentCount + 1})`;
+        }
+
+        function loadArticle() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Allow Enter key to submit comment (with Shift+Enter for new line)
+        document.getElementById('commentInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                
